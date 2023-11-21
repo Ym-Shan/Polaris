@@ -33,12 +33,12 @@ export NOOP_HOME="/home/ling0938/Polaris"
 export NEMU_HOME="/home/ling0938/NEMU"
 export AM_HOME="/home/ling0938/nexus-am"
 ```
-- Switch to the nexus-am/apps/microbench and execute:
+- Switch to the `nexus-am/apps/microbench` and execute:
 ```
 cd nexus-am/apps/microbench
 make ARCH=riscv64-nutshell mainargs=test run
 ```
-- Return to the Polaris folder and execute the following command to generate the emulator in ./build:
+- Return to the `Polaris` folder and execute the following command to generate the emulator in ./build:
 ```
 make emu EMU_TRACE=1 EMU_CXX_EXTRA_FLAGS="-DFIRST_INST_ADDRESS=0x80000000" WITH_CHISELDB=01
 ```
