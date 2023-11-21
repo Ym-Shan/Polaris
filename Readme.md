@@ -1,4 +1,4 @@
-# Polaris22A: RISC-V SIMD Superscalar Dual-Issue Processor
+![image](https://github.com/Ym-Shan/Polaris/assets/121172737/6c5e18f2-54c6-449d-84d0-d43c4213a11c)![image](https://github.com/Ym-Shan/Polaris/assets/121172737/f06e6c2a-d8a0-4982-90d3-2cbaa06b816d)# Polaris22A: RISC-V SIMD Superscalar Dual-Issue Processor
 Polaris is a sequential superscalar dual-issue RISC-V processor supporting RISC-V P instruction set extension（Packed-SIMD Instructions）
 
 - [Polaris22A: RISC-V SIMD Superscalar Dual-Issue Processor](#polaris22a-risc-v-simd-superscalar-dual-issue-processor)
@@ -10,7 +10,44 @@ Polaris is a sequential superscalar dual-issue RISC-V processor supporting RISC-
   - [5. About](#5-about)
 <br/><br/>
 
-## 0. RISC-V P instruction set extension
+## 0. Complete Configuration Tutorial
+- Clone three projects: [Polaris](https://github.com/Ym-Shan/Polaris), [Nemu](https://github.com/OpenXiangShan/NEMU), and [nexus-am](https://github.com/OSCPU/nexus-am).
+- Install [mill](https://github.com/com-lihaoyi/mill) using the following code:
+```
+curl -L https://github.com/com-lihaoyi/mill/releases/download/0.9.3/0.9.3 > mill && chmod +x mill
+```
+- Install JDK and other packages:
+```
+sudo apt-get install default-jdk
+sudo apt-get install verilator
+sudo apt-get install clang
+sudo apt-get install zlib1g-dev
+sudo apt-get install curl
+sudo apt-get install gcc-riscv64-linux-gnu g++-riscv64-linux-gnu
+```
+- Configure the environment variables as follows:
+```
+export PATH=/home/ling0938/Polaris:$PATH
+export NUTSHELL_HOME="/home/ling0938/Polaris"
+export NOOP_HOME="/home/ling0938/Polaris"
+export NEMU_HOME="/home/ling0938/NEMU"
+export AM_HOME="/home/ling0938/nexus-am"
+```
+- Switch to the nexus-am/apps/microbench and execute:
+```
+cd nexus-am/apps/microbench
+make ARCH=riscv64-nutshell mainargs=test run
+```
+- Return to the Polaris folder and execute the following command to generate the emulator in ./build:
+```
+make emu EMU_TRACE=1 EMU_CXX_EXTRA_FLAGS="-DFIRST_INST_ADDRESS=0x80000000" WITH_CHISELDB=01
+```
+- Execute the following command to run the simulator:
+```
+./build/emu -b 0 -e 0 -i ./ready-to-run/microbench.bin --no-diff
+```
+
+## 1. RISC-V P instruction set extension
  RISC-V P instruction set extension (RVP for short) is a RISC-V instruction set extension in the draft stage. 
  RVP multiplexes the general-purpose registers specified by RVI and divides them into 8bit data groups, 16bit data groups or 32bit data groups. In this way, RVP allows cpu to process multiple sets of data in one instruction, improving parallel computing performance.
 
@@ -23,7 +60,7 @@ Polaris is a sequential superscalar dual-issue RISC-V processor supporting RISC-
 
 <br/>
 
-## 1. Processor Features
+## 2. Processor Features
  Instruction Sets: RV64IMACP
 
  Privileged Mode: U/S/M
@@ -35,7 +72,7 @@ Polaris is a sequential superscalar dual-issue RISC-V processor supporting RISC-
  Cache: 32KB DCache + 32KB ICache + 128KB L2 Cache
 <br/>
 
-## 2. Processor Architecture
+## 3. Processor Architecture
  Polaris is structured as a sequential Dual-Issue Processor. It adopts the variable-length back-end structure to balance the efficiency and timing of each operator. The pipeline of the entire processor can reach up to 8 stages.
 
 <img src=./doc/Polaris.png width="70%">
@@ -59,7 +96,7 @@ Up to 2 instructions can be sent to EXU from ISU per cycle.
 
 <br/><br/>
 
-## 3. Simulation and FPGA Implement
+## 4. Simulation and FPGA Implement
  Polaris supports simulation through verilator or verification on fpga platforms.
  To generate a emulator to simulate Polaris, one should follow the instructions of [Nutshell](https://github.com/OSCPU/NutShell) where the README descripes detailed dependencies and operations how to use provided image or other images.
 -  you can use the following command to compile the emulator in the directory of this repository,The emulator(emu) will be generated in the "build" directory
@@ -82,7 +119,7 @@ Polaris has implemented the [fpga verification environment](https://github.com/s
 
 <br/><br/>
 
-## 4. Configuration of Polaris
+## 5. Configuration of Polaris
  In addition to the configurable items of the NutShell(while RV32 is not supported in Polaris), Polaris also includes the following configurable items: 
 -  independent BRU or BRU integrated in ALU(1 or 0)
 -  the issue-num of PEXTU: (0 or 1 or 2 and RVP is forbidden when num = 0)
@@ -98,7 +135,7 @@ Polaris has implemented the [fpga verification environment](https://github.com/s
 "Polaris_SIMDU_WAY_NUM" -> 1
 ```
 
-## 5. About
+## 6. About
  Polaris is an open source RISC-V processor aiming to perform high energy efficiency. In the early stage of design, it was hoped to be the basic computing unit of an open source multi-core chip.
 
  The development environment of Polaris relies on the [NutShell](https://github.com/OSCPU/NutShell) project, so you can see some codes of NutShell in this project. Currently the scalar ALU for RVI, the atomic part of the pipeline LSU and the divider still multiplex the uints of the NutShell.
