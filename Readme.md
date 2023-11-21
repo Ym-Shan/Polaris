@@ -1,4 +1,4 @@
-![image](https://github.com/Ym-Shan/Polaris/assets/121172737/6c5e18f2-54c6-449d-84d0-d43c4213a11c)![image](https://github.com/Ym-Shan/Polaris/assets/121172737/f06e6c2a-d8a0-4982-90d3-2cbaa06b816d)# Polaris22A: RISC-V SIMD Superscalar Dual-Issue Processor
+# Polaris22A: RISC-V SIMD Superscalar Dual-Issue Processor
 Polaris is a sequential superscalar dual-issue RISC-V processor supporting RISC-V P instruction set extension（Packed-SIMD Instructions）
 
 - [Polaris22A: RISC-V SIMD Superscalar Dual-Issue Processor](#polaris22a-risc-v-simd-superscalar-dual-issue-processor)
@@ -16,7 +16,7 @@ Polaris is a sequential superscalar dual-issue RISC-V processor supporting RISC-
 ```
 curl -L https://github.com/com-lihaoyi/mill/releases/download/0.9.3/0.9.3 > mill && chmod +x mill
 ```
-- Install JDK and other packages:
+- Install `JDK` and other packages:
 ```
 sudo apt-get install default-jdk
 sudo apt-get install verilator
