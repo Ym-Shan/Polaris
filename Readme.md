@@ -33,7 +33,7 @@ export NOOP_HOME="/home/ling0938/Polaris"
 export NEMU_HOME="/home/ling0938/NEMU"
 export AM_HOME="/home/ling0938/nexus-am"
 ```
-- Switch to the `nexus-am/apps/microbench` and execute:
+- Switch to the `nexus-am/apps/microbench` and execute(Please ignore some warnings.):
 ```
 cd nexus-am/apps/microbench
 make ARCH=riscv64-nutshell mainargs=test run
@@ -46,6 +46,8 @@ make emu EMU_TRACE=1 EMU_CXX_EXTRA_FLAGS="-DFIRST_INST_ADDRESS=0x80000000" WITH_
 ```
 ./build/emu -b 0 -e 0 -i ./ready-to-run/microbench.bin --no-diff
 ```
+If the running effect is as follows, it indicates successful configuration.
+<img width="1745" alt="image" src="https://github.com/Ym-Shan/Polaris/assets/121172737/7cfd83fd-9435-4bd6-82e2-e201a1974a62">
 
 ## 1. RISC-V P instruction set extension
  RISC-V P instruction set extension (RVP for short) is a RISC-V instruction set extension in the draft stage. 
